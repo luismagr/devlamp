@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  webapp:
+    image: luismagr/web
+    build:
+      context: .
+      dockerfile: ./Dockerfile/apache/Dockerfile
+    volumes:
+    - ./public:/var/www/html
+    ports:
+    - 80:80
