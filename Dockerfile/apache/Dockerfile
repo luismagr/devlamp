@@ -17,6 +17,7 @@ RUN apt update && \
     php-pgsql \
     php-xml \
     php-zip \
+    php-mysql \
     vim && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*

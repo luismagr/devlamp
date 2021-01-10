@@ -1,7 +1,22 @@
 version: "3.9"
 services:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: database
+      MYSQL_DATABASE: database
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+    networks:
+      - lamp
+
   webapp:
-    image: luismagr/web
+    depends_on:
+      - mysql
+    image: drupalistas/web
     build:
       context: .
       dockerfile: ./Dockerfile/apache/Dockerfile
@@ -9,3 +24,21 @@ services:
     - ./public:/var/www/html
     ports:
     - 80:80
+    networks:
+      - lamp
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: database
+    networks:
+      - lamp
+
+networks:
+  lamp:

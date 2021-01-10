@@ -1,4 +1,5 @@
 .idea/
-
+db_data
+*.sql
 public/index.html
 public/index.php
